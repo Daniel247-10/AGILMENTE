@@ -1,0 +1,81 @@
+.welcome-banner {
+  background-image: url('/images/banner-bg.webp');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.single-line-banner {
+  gap: 0.15rem;
+}
+
+.single-line-banner .welcome-title {
+  white-space: nowrap;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.welcome-title {
+  font-size: clamp(2.5rem, 2.8vw, 3.2rem);
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+  font-size: clamp(1rem, 1.5vw, 1.5rem);
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.welcome-cta {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  border: none !important;
+  color: #fff !important;
+  font-size: clamp(1.1rem, 1.6vw, 1.7rem);
+  padding: 0.8rem 2rem !important;
+  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.25);
+}
+
+.welcome-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.04);
+  z-index: 1;
+}
+
+@media (max-width: 576px) {
+  .welcome-banner {
+    min-height: 200px;
+  }
+
+  .welcome-title {
+    font-size: 2rem;
+  }
+
+  .welcome-subtitle {
+    font-size: 1rem;
+  }
+
+  .welcome-cta {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.4rem !important;
+  }
+}

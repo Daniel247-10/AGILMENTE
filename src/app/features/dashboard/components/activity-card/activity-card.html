@@ -1,0 +1,17 @@
+<article class="activity-card card border-0 rounded-4 p-3 position-relative h-100" [attr.data-theme]="actividad.colorTema">
+  <span class="activity-card__badge badge rounded-circle position-absolute">{{ numero }}</span>
+
+  <i class="bi {{ actividad.icono }} activity-card__icon mb-2"></i>
+
+  <h3 class="activity-card__title fs-6 fw-bold mb-1">{{ actividad.titulo }}</h3>
+  <p class="activity-card__desc text-secondary small mb-3">{{ actividad.descripcion }}</p>
+
+  <button
+    type="button"
+    class="activity-card__cta btn rounded-pill align-self-start px-3 py-1 fw-bold"
+    (click)="onComenzar()"
+    [attr.aria-label]="'Comenzar actividad ' + actividad.titulo"
+  >
+    Comenzar
+  </button>
+</article>

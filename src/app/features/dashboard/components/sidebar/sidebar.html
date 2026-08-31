@@ -1,0 +1,30 @@
+<aside class="sidebar d-flex flex-column vh-100 position-sticky top-0">
+  <div class="d-flex align-items-center gap-2 mb-4 px-1 brand-block">
+    <div class="brand-icon" aria-hidden="true">
+      <i class="bi bi-lightbulb-fill"></i>
+    </div>
+    <div class="d-flex flex-column lh-sm">
+      <span class="fw-bold text-primary brand-title">ÁGILMENTE</span>
+      <span class="text-muted brand-subtitle">Aprendo, pienso y resuelvo</span>
+    </div>
+  </div>
+
+  <nav class="nav flex-column sidebar-menu">
+    @for (item of menu; track item.ruta) {
+      <button
+        type="button"
+        class="btn d-flex align-items-center gap-3 text-start sidebar-link {{ item.etiqueta === 'Inicio' ? 'btn-primary' : 'btn-light' }}"
+        (click)="navegar(item.ruta)"
+      >
+        <span class="menu-icon"><i class="bi {{ item.icono }}"></i></span>
+        <span class="menu-label">{{ item.etiqueta }}</span>
+      </button>
+    }
+  </nav>
+
+  <button type="button" class="btn btn-outline-danger d-flex align-items-center gap-2 mt-4 logout-button" (click)="cerrarSesion()">
+    <span class="logout-icon"><i class="bi bi-box-arrow-right"></i></span>
+    <span>Cerrar Sesión</span>
+  </button>
+
+</aside>

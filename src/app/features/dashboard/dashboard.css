@@ -1,0 +1,19 @@
+.dashboard-bg {
+  background: #f6f8fb;
+}
+
+.sidepanel {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.tip-bar {
+  background: #f4f1fd;
+}
+
+@media (max-width: 991px) {
+  .sidepanel {
+    width: 100%;
+    flex-direction: row !important;
+  }
+}

@@ -1,0 +1,18 @@
+<section class="card border rounded-4 p-3">
+  <header class="d-flex align-items-center justify-content-between mb-3">
+    <h2 class="fs-6 fw-bold mb-0"><i class="bi bi-megaphone-fill me-1"></i> Avisos y Comunicados</h2>
+    <a href="#" class="small text-decoration-none fw-bold">Ver todos</a>
+  </header>
+
+  <ul class="list-unstyled d-flex flex-column gap-3 mb-0">
+    @for (c of comunicados; track c.id) {
+      <li class="d-flex align-items-start gap-2">
+        <span class="announcement-dot rounded-circle mt-1" [attr.data-color]="c.colorDot"></span>
+        <div class="d-flex flex-column">
+          <span class="small fw-semibold text-dark">{{ c.titulo }}</span>
+          <span class="text-muted" style="font-size: 11px;">{{ c.fecha }}</span>
+        </div>
+      </li>
+    }
+  </ul>
+</section>

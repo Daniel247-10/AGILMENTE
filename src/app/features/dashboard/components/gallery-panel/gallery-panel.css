@@ -1,0 +1,5 @@
+.gallery-thumb {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #f3f4f6;
+}

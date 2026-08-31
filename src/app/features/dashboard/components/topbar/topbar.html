@@ -1,0 +1,52 @@
+<header class="topbar-header mb-4 d-flex align-items-center justify-content-between flex-wrap gap-3">
+
+  <!-- Usuario / Saludo -->
+  <div class="d-flex align-items-center gap-3">
+    @if (usuario.avatarUrl) {
+      <img
+        [src]="usuario.avatarUrl"
+        [alt]="usuario.nombre"
+        class="topbar__avatar rounded-circle border border-3 border-light shadow-sm object-fit-cover"
+      />
+    } @else {
+      <div class="topbar__avatar topbar__avatar--fallback rounded-circle bg-primary-subtle text-primary fw-bold d-flex align-items-center justify-content-center border border-3 border-light shadow-sm">
+        {{ usuario.nombre.charAt(0) }}
+      </div>
+    }
+
+    <div class="topbar__identity">
+      <h2 class="h5 fw-bold mb-0 text-dark topbar__greeting">
+        ¡Hola, {{ usuario.nombre }}!
+      </h2>
+      <small class="text-body-secondary fw-medium topbar__subtitle">Sigue aprendiendo cada día</small>
+    </div>
+  </div>
+
+  <!-- Contadores de Progreso -->
+  <div class="d-flex align-items-center gap-3 topbar__stats">
+
+    <!-- Puntos Acumulados -->
+    <div class="badge-card d-flex align-items-center gap-2 px-3 py-2 rounded-4 bg-warning-subtle border border-warning-subtle">
+      <div class="badge-icon bg-warning rounded-circle d-flex align-items-center justify-content-center text-white shadow-sm" style="width: 32px; height: 32px;">
+        <i class="bi bi-award-fill"></i>
+      </div>
+      <div class="lh-1 text-start">
+        <span class="d-block fw-bold text-dark fs-6">{{ usuario.puntos }}</span>
+        <small class="text-warning-emphasis fw-semibold" style="font-size: 0.75rem;">Puntos</small>
+      </div>
+    </div>
+
+    <!-- Nivel Actual -->
+    <div class="badge-card d-flex align-items-center gap-2 px-3 py-2 rounded-4 bg-primary-subtle border border-primary-subtle">
+      <div class="badge-icon bg-primary rounded-circle d-flex align-items-center justify-content-center text-white shadow-sm" style="width: 32px; height: 32px;">
+        <i class="bi bi-star-fill"></i>
+      </div>
+      <div class="lh-1 text-start">
+        <span class="d-block fw-bold text-primary fs-6">Nivel {{ usuario.nivel }}</span>
+        <small class="text-primary-emphasis fw-semibold" style="font-size: 0.75rem;">{{ usuario.tituloNivel }}</small>
+      </div>
+    </div>
+
+  </div>
+
+</header>

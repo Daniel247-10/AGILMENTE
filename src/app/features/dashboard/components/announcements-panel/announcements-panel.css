@@ -1,0 +1,9 @@
+.announcement-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+}
+
+.announcement-dot[data-color='red'] { background: #dc3545; }
+.announcement-dot[data-color='blue'] { background: #0d6efd; }
+.announcement-dot[data-color='green'] { background: #198754; }

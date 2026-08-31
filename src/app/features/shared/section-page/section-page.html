@@ -1,0 +1,22 @@
+<main class="section-page">
+  <div class="page-shell">
+    <div class="page-header">
+      <span class="badge">{{ badge }}</span>
+      <h1>{{ title }}</h1>
+      <p>{{ description }}</p>
+    </div>
+
+    <div class="cards-grid">
+      @for (item of items; track item.route) {
+        <article class="feature-card">
+          <div class="icon-wrap">
+            <i class="bi {{ item.icon }}"></i>
+          </div>
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.description }}</p>
+          <a [routerLink]="item.route" class="cta">Ir a la actividad</a>
+        </article>
+      }
+    </div>
+  </div>
+</main>
