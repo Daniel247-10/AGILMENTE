@@ -10,7 +10,6 @@ type TipoUsuario = 'estudiante' | 'docente';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css'
@@ -32,12 +31,16 @@ export class Login {
       password: ['', [Validators.required, Validators.minLength(6)]],
       tipoUsuario: ['estudiante', Validators.required]
     });
+
+    // Se empieza en modo login: el nombre no se pide, así que no debe validarse
+    this.actualizarCampoNombre();
   }
 
   toggleModo(): void {
     this.modoRegistro.update((value) => !value);
     this.errorMessage.set('');
     this.form.get('tipoUsuario')?.setValue(this.tipoUsuario());
+    this.actualizarCampoNombre();
   }
 
   seleccionarTipo(tipo: TipoUsuario): void {
@@ -140,6 +143,17 @@ export class Login {
       this.errorMessage.set(this.obtenerMensajeErrorGoogle(error));
     } finally {
       this.isSubmitting.set(false);
+    }
+  }
+
+  // Activa el campo nombre solo en registro; un campo desactivado no cuenta para form.invalid
+  private actualizarCampoNombre(): void {
+    const nombre = this.form.controls.nombreCompleto;
+
+    if (this.modoRegistro()) {
+      nombre.enable();
+    } else {
+      nombre.disable();
     }
   }
 

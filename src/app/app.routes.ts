@@ -6,6 +6,9 @@ import { auth } from './firebase';
 import { Login } from './features/auth/login/login';
 import { Dashboard } from './features/dashboard/dashboard';
 import { SectionPage } from './features/shared/section-page/section-page';
+import { Biblioteca } from './features/biblioteca/biblioteca';
+import { BibliotecaAdmin } from './features/biblioteca/admin/biblioteca-admin';
+import { obtenerRolActual } from './core/rol';
 
 const menuItems = {
   genericas: [
@@ -40,10 +43,19 @@ const redirectIfAuthenticated: CanActivateFn = async () => {
   });
 };
 
+// Solo entra quien tiene rol administrador en Firestore; los demás vuelven a la biblioteca
+const requireAdmin: CanActivateFn = async () => {
+  const router = inject(Router);
+  const rol = await obtenerRolActual();
+
+  return rol === 'administrador' ? true : router.createUrlTree(['/biblioteca']);
+};
+
 export const routes: Routes = [
   { path: 'login', component: Login, canActivate: [redirectIfAuthenticated] },
   { path: 'inicio', component: Dashboard, canActivate: [requireAuth] },
-  { path: 'biblioteca', component: SectionPage, canActivate: [requireAuth], data: { title: 'Biblioteca Digital', description: 'Material, guías y recursos para estudiar con más profundidad.', badge: 'Recursos', items: menuItems.genericas.filter(item => item.route !== '/biblioteca') } },
+  { path: 'biblioteca', component: Biblioteca, canActivate: [requireAuth] },
+  { path: 'biblioteca/administrar', component: BibliotecaAdmin, canActivate: [requireAdmin] },
   { path: 'progreso', component: SectionPage, canActivate: [requireAuth], data: { title: 'Mi Progreso', description: 'Visualiza tus logros, metas y evolución en cada reto.', badge: 'Estadísticas', items: menuItems.genericas.filter(item => item.route !== '/progreso') } },
   { path: 'avisos', component: SectionPage, canActivate: [requireAuth], data: { title: 'Avisos y Comunicados', description: 'Mantente informado sobre noticias, eventos y fechas importantes.', badge: 'Novedades', items: menuItems.genericas.filter(item => item.route !== '/avisos') } },
   { path: 'recursos', component: SectionPage, canActivate: [requireAuth], data: { title: 'Recursos Educativos', description: 'Accede a materiales de apoyo para explorar más contenidos.', badge: 'Material', items: menuItems.genericas.filter(item => item.route !== '/recursos') } },
