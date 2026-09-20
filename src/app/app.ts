@@ -15,7 +15,7 @@ import { UsuarioResumen } from './features/dashboard/dashboard.model';
 })
 export class App {
   protected readonly title = signal('agilmente');
-  protected readonly isAuthenticated = signal(false);
+  protected readonly isAuthenticated = signal(localStorage.getItem('agilmente_guest') === 'true');
 
   usuario: UsuarioResumen = {
     nombre: 'Usuario',

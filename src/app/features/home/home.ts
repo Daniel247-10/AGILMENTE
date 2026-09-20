@@ -12,6 +12,6 @@ export class Home {
 
   continuarComoInvitado(): void {
     localStorage.setItem('agilmente_guest', 'true');
-    this.router.navigateByUrl('/inicio');
+    this.router.navigateByUrl('/inicio', { replaceUrl: true });
   }
 }
