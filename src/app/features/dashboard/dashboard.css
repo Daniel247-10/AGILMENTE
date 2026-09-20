@@ -14,6 +14,6 @@
 @media (max-width: 991px) {
   .sidepanel {
     width: 100%;
-    flex-direction: row !important;
+    flex-direction: column !important;
   }
 }

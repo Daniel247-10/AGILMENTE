@@ -1,6 +1,16 @@
 @if (isAuthenticated()) {
   <div class="d-flex min-vh-100 dashboard-bg">
-    <app-sidebar></app-sidebar>
+    <button
+      type="button"
+      class="mobile-menu-toggle"
+      aria-label="Abrir menú de navegación"
+      [attr.aria-expanded]="mobileMenuOpen()"
+      (click)="abrirMenuMovil()"
+    >
+      <i class="bi bi-list"></i>
+    </button>
+    <div class="mobile-menu-backdrop" [class.is-visible]="mobileMenuOpen()" (click)="cerrarMenuMovil()"></div>
+    <app-sidebar [mobileOpen]="mobileMenuOpen()" (closeMenu)="cerrarMenuMovil()"></app-sidebar>
 
     <div class="flex-grow-1 d-flex flex-column min-w-0">
       <app-topbar [usuario]="usuario"></app-topbar>

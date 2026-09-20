@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { signOut } from 'firebase/auth';
 
@@ -19,6 +19,9 @@ interface ItemMenu {
   styleUrl: './sidebar.css'
 })
 export class Sidebar implements OnInit {
+  @Input() mobileOpen = false;
+  @Output() readonly closeMenu = new EventEmitter<void>();
+
   readonly esAdmin = signal(false);
   readonly modoUsuario = signal(false);
   readonly esInvitado = signal(false);
@@ -51,6 +54,10 @@ export class Sidebar implements OnInit {
 
   destino(item: ItemMenu): string {
     return this.esAdmin() && !this.modoUsuario() && item.rutaAdmin ? item.rutaAdmin : item.ruta;
+  }
+
+  cerrarMenuMovil(): void {
+    this.closeMenu.emit();
   }
 
   async cerrarSesion(): Promise<void> {

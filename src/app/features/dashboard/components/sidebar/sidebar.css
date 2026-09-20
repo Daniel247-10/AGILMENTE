@@ -13,6 +13,10 @@
   z-index: 15;
 }
 
+.sidebar-close {
+  display: none;
+}
+
 .brand-block {
   padding: 0 4px 12px;
   margin-bottom: 12px;
@@ -137,17 +141,38 @@
 
 @media (max-width: 991px) {
   .sidebar {
-    width: 100%;
-    min-width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid #eef0f4;
+    position: fixed;
+    z-index: 55;
+    width: min(82vw, 300px);
+    min-width: 0;
+    height: 100dvh;
+    border-right: 1px solid #e5e7eb;
+    border-bottom: 0;
+    transform: translateX(-105%);
+    transition: transform 0.25s ease;
+  }
+
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-close {
+    position: absolute;
+    top: 1rem;
+    right: 0.85rem;
+    display: grid;
+    width: 36px;
+    height: 36px;
+    place-items: center;
+    border: 1px solid #dbe3ef;
+    border-radius: 10px;
+    background: #fff;
+    color: #475569;
   }
 
   .sidebar-menu {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 }
 

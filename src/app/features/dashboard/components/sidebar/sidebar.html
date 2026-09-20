@@ -1,4 +1,7 @@
-<aside class="sidebar d-flex flex-column vh-100 position-sticky top-0">
+<aside class="sidebar d-flex flex-column vh-100 position-sticky top-0" [class.mobile-open]="mobileOpen">
+  <button type="button" class="sidebar-close" aria-label="Cerrar menú de navegación" (click)="cerrarMenuMovil()">
+    <i class="bi bi-x-lg"></i>
+  </button>
   <div class="d-flex align-items-center gap-2 mb-4 px-1 brand-block">
     <div class="brand-icon" aria-hidden="true">
       <i class="bi bi-lightbulb-fill"></i>
@@ -19,6 +22,7 @@
         [routerLinkActiveOptions]="{ exact: true }"
         #rutaActiva="routerLinkActive"
         [class.btn-light]="!rutaActiva.isActive"
+        (click)="cerrarMenuMovil()"
       >
         <span class="menu-icon"><i class="bi {{ item.icono }}"></i></span>
         <span class="menu-label">{{ item.etiqueta }}</span>
@@ -27,7 +31,7 @@
   </nav>
 
   @if (esAdmin()) {
-    <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2 mt-4 user-mode-button" (click)="cambiarModo()">
+    <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2 mt-4 user-mode-button" (click)="cambiarModo(); cerrarMenuMovil()">
       <i class="bi" [class.bi-eye]="!modoUsuario()" [class.bi-shield-lock]="modoUsuario()"></i>
       <span>{{ modoUsuario() ? 'Volver a modo administrador' : 'Ver modo usuario' }}</span>
     </button>
@@ -40,8 +44,8 @@
 
   @if (esInvitado()) {
     <div class="d-grid gap-2 mt-2" aria-label="Opciones de cuenta">
-      <a class="btn btn-outline-primary btn-sm" routerLink="/login">Iniciar sesión</a>
-      <a class="btn btn-primary btn-sm" routerLink="/registrarse">Registrarse</a>
+      <a class="btn btn-outline-primary btn-sm" routerLink="/login" (click)="cerrarMenuMovil()">Iniciar sesión</a>
+      <a class="btn btn-primary btn-sm" routerLink="/registrarse" (click)="cerrarMenuMovil()">Registrarse</a>
     </div>
   }
 

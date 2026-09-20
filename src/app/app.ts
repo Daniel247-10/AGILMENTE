@@ -16,6 +16,7 @@ import { UsuarioResumen } from './features/dashboard/dashboard.model';
 export class App {
   protected readonly title = signal('agilmente');
   protected readonly isAuthenticated = signal(localStorage.getItem('agilmente_guest') === 'true');
+  protected readonly mobileMenuOpen = signal(false);
 
   usuario: UsuarioResumen = {
     nombre: 'Usuario',
@@ -45,6 +46,14 @@ export class App {
         };
       }
     });
+  }
+
+  abrirMenuMovil(): void {
+    this.mobileMenuOpen.set(true);
+  }
+
+  cerrarMenuMovil(): void {
+    this.mobileMenuOpen.set(false);
   }
 
   private formatearNombre(nombre: string): string {
