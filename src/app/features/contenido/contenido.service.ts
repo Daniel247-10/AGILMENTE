@@ -29,8 +29,7 @@ export class ContenidoService {
 
     const documentos = new Map(
       resultados
-        .filter((resultado): resultado is PromiseFulfilledResult<Awaited<ReturnType<typeof getDocs>>> => resultado.status === 'fulfilled')
-        .flatMap((resultado) => resultado.value.docs)
+        .flatMap((resultado) => resultado.status === 'fulfilled' ? resultado.value.docs : [])
         .map((documento) => [documento.id, documento])
     );
 
