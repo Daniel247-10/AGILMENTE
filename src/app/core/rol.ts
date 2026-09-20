@@ -1,6 +1,6 @@
 import { doc, getDoc } from 'firebase/firestore';
 
-import { auth, db } from '../firebase';
+import { auth, colecciones } from '../firebase';
 
 export type Rol = 'administrador' | 'docente' | 'estudiante';
 
@@ -15,7 +15,7 @@ export async function obtenerRolActual(): Promise<Rol | null> {
   }
 
   try {
-    const snap = await getDoc(doc(db, 'usuarios', usuario.uid));
+    const snap = await getDoc(doc(colecciones.usuarios, usuario.uid));
     const rol = snap.data()?.['rol'];
     return rol === 'administrador' || rol === 'docente' || rol === 'estudiante' ? rol : null;
   } catch {

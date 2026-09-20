@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { collection, doc, getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCxTzJALEOQfTwj7mxDF1QJJuQYHZtiIVA',
@@ -15,3 +15,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
+
+export const colecciones = {
+  usuarios: collection(db, 'usuarios'),
+  biblioteca: collection(db, 'biblioteca'),
+  comunicados: collection(db, 'comunicados'),
+  fotosGaleria: collection(db, 'fotosGaleria'),
+  galeria: collection(db, 'galeria'),
+  unidadEducativa: collection(db, 'unidadEducativa')
+};
+
+export const referencias = {
+  unidadEducativaPrincipal: doc(colecciones.unidadEducativa, 'principal')
+};

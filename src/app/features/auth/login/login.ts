@@ -1,10 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-import { auth, db } from '../../../firebase';
+import { auth, colecciones } from '../../../firebase';
 
 type TipoUsuario = 'estudiante' | 'docente';
 
@@ -23,7 +23,8 @@ export class Login {
 
   constructor(
     private readonly fb: FormBuilder,
-    private readonly router: Router
+    private readonly router: Router,
+    private readonly route: ActivatedRoute
   ) {
     this.form = this.fb.nonNullable.group({
       nombreCompleto: ['', [Validators.required, Validators.minLength(3)]],
@@ -32,7 +33,7 @@ export class Login {
       tipoUsuario: ['estudiante', Validators.required]
     });
 
-    // Se empieza en modo login: el nombre no se pide, así que no debe validarse
+    this.modoRegistro.set(this.route.snapshot.data['modo'] === 'registro');
     this.actualizarCampoNombre();
   }
 
@@ -94,7 +95,7 @@ export class Login {
         rol: tipoSeleccionado
       };
 
-      await setDoc(doc(db, 'usuarios', credential.user.uid), usuario);
+      await setDoc(doc(colecciones.usuarios, credential.user.uid), usuario);
 
       const nombreFormateado = this.formatearNombre(usuario.nombreCompleto);
       localStorage.setItem('agilmente_user_name', nombreFormateado);
@@ -117,7 +118,7 @@ export class Login {
       const uid = credential.user.uid;
       const tipoSeleccionado: TipoUsuario = this.obtenerTipoUsuario(this.form.get('tipoUsuario')?.value ?? 'estudiante');
 
-      const userDoc = await getDoc(doc(db, 'usuarios', uid));
+      const userDoc = await getDoc(doc(colecciones.usuarios, uid));
       const data = {
         email: credential.user.email ?? '',
         nombreCompleto: credential.user.displayName ?? 'Usuario de Google',
@@ -125,9 +126,9 @@ export class Login {
       };
 
       if (!userDoc.exists()) {
-        await setDoc(doc(db, 'usuarios', uid), data);
+        await setDoc(doc(colecciones.usuarios, uid), data);
       } else {
-        await setDoc(doc(db, 'usuarios', uid), {
+        await setDoc(doc(colecciones.usuarios, uid), {
           ...userDoc.data(),
           email: credential.user.email ?? userDoc.data()['email'],
           nombreCompleto: credential.user.displayName ?? userDoc.data()['nombreCompleto'],

@@ -14,12 +14,12 @@ import {
   where
 } from 'firebase/firestore';
 
-import { auth, db } from '../../firebase';
+import { auth, colecciones } from '../../firebase';
 import { DatosMaterial, MaterialBiblioteca } from './biblioteca.model';
 
 @Injectable({ providedIn: 'root' })
 export class BibliotecaService {
-  private readonly coleccion = collection(db, 'biblioteca');
+  private readonly coleccion = colecciones.biblioteca;
 
   // Estudiantes y docentes: solo el material publicado
   async listarPublicados(): Promise<MaterialBiblioteca[]> {
@@ -42,11 +42,11 @@ export class BibliotecaService {
   }
 
   async actualizar(id: string, datos: Partial<DatosMaterial>): Promise<void> {
-    await updateDoc(doc(db, 'biblioteca', id), { ...datos });
+    await updateDoc(doc(this.coleccion, id), { ...datos });
   }
 
   async eliminar(id: string): Promise<void> {
-    await deleteDoc(doc(db, 'biblioteca', id));
+    await deleteDoc(doc(this.coleccion, id));
   }
 
   // Pasa los documentos de Firestore a nuestro modelo, del más nuevo al más antiguo

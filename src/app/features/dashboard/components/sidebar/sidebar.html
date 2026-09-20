@@ -13,8 +13,12 @@
     @for (item of menu; track item.ruta) {
       <button
         type="button"
-        class="btn d-flex align-items-center gap-3 text-start sidebar-link {{ item.etiqueta === 'Inicio' ? 'btn-primary' : 'btn-light' }}"
-        (click)="navegar(item.ruta)"
+        class="btn d-flex align-items-center gap-3 text-start sidebar-link"
+        [routerLink]="destino(item)"
+        routerLinkActive="btn-primary"
+        [routerLinkActiveOptions]="{ exact: true }"
+        #rutaActiva="routerLinkActive"
+        [class.btn-light]="!rutaActiva.isActive"
       >
         <span class="menu-icon"><i class="bi {{ item.icono }}"></i></span>
         <span class="menu-label">{{ item.etiqueta }}</span>
@@ -22,9 +26,23 @@
     }
   </nav>
 
-  <button type="button" class="btn btn-outline-danger d-flex align-items-center gap-2 mt-4 logout-button" (click)="cerrarSesion()">
+  @if (esAdmin()) {
+    <button type="button" class="btn btn-outline-primary d-flex align-items-center gap-2 mt-4 user-mode-button" (click)="cambiarModo()">
+      <i class="bi" [class.bi-eye]="!modoUsuario()" [class.bi-shield-lock]="modoUsuario()"></i>
+      <span>{{ modoUsuario() ? 'Volver a modo administrador' : 'Ver modo usuario' }}</span>
+    </button>
+  }
+
+  <button type="button" class="btn btn-outline-danger d-flex align-items-center gap-2 mt-{{ esAdmin() ? '2' : '4' }} logout-button" (click)="cerrarSesion()">
     <span class="logout-icon"><i class="bi bi-box-arrow-right"></i></span>
-    <span>Cerrar Sesión</span>
+    <span>Salir</span>
   </button>
+
+  @if (esInvitado()) {
+    <div class="d-grid gap-2 mt-2" aria-label="Opciones de cuenta">
+      <a class="btn btn-outline-primary btn-sm" routerLink="/login">Iniciar sesión</a>
+      <a class="btn btn-primary btn-sm" routerLink="/registrarse">Registrarse</a>
+    </div>
+  }
 
 </aside>

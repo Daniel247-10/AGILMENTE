@@ -1,0 +1,109 @@
+<div class="container-fluid p-4">
+  <header class="mb-4">
+    <a routerLink="/inicio" class="small text-decoration-none"><i class="bi bi-arrow-left me-1"></i>Volver al inicio</a>
+    <h1 class="fs-4 fw-bold mt-2 mb-1"><i class="bi bi-pencil-square me-2"></i>Administrar contenido</h1>
+    <p class="text-secondary mb-0">Gestiona los comunicados y las imágenes que verá la comunidad.</p>
+    <div class="d-flex flex-wrap gap-2 mt-3">
+      <a routerLink="/biblioteca/administrar" class="btn btn-outline-primary btn-sm"><i class="bi bi-book me-1"></i>Editar Biblioteca</a>
+      <a routerLink="/unidad-educativa/administrar" class="btn btn-outline-primary btn-sm"><i class="bi bi-building me-1"></i>Editar Unidad Educativa</a>
+    </div>
+  </header>
+
+  @if (mensaje()) { <div class="alert alert-success py-2" role="status">{{ mensaje() }}</div> }
+  @if (error()) { <div class="alert alert-danger py-2" role="alert">{{ error() }}</div> }
+
+  <div class="row g-4">
+    <div class="col-12 col-xl-5">
+      <section class="card rounded-4 p-3 p-md-4 mb-4">
+        <h2 class="fs-5 fw-bold mb-3">{{ editandoComunicado() ? 'Editar comunicado' : 'Nuevo comunicado' }}</h2>
+        <form [formGroup]="comunicadoForm" (ngSubmit)="guardarComunicado()" novalidate>
+          <label class="form-label fw-semibold" for="tituloComunicado">Título</label>
+          <input id="tituloComunicado" class="form-control mb-3" formControlName="titulo" maxlength="120" placeholder="Prueba de lógica del viernes" />
+          @if (comunicadoForm.controls.titulo.touched && comunicadoForm.controls.titulo.invalid) { <div class="text-danger small mb-2">Escribe un título de al menos 3 caracteres.</div> }
+
+          <label class="form-label fw-semibold" for="fechaComunicado">Fecha o referencia</label>
+          <input id="fechaComunicado" class="form-control mb-3" formControlName="fecha" maxlength="40" placeholder="Hoy o 20 de septiembre" />
+
+          <label class="form-label fw-semibold" for="colorComunicado">Color del indicador</label>
+          <select id="colorComunicado" class="form-select mb-3" formControlName="colorDot">
+            <option value="red">Rojo</option><option value="blue">Azul</option><option value="green">Verde</option>
+          </select>
+
+          <div class="form-check form-switch mb-4">
+            <input id="publicadoComunicado" class="form-check-input" type="checkbox" formControlName="publicado" />
+            <label class="form-check-label" for="publicadoComunicado">Publicar ahora</label>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary fw-bold flex-grow-1" type="submit" [disabled]="guardando()">{{ editandoComunicado() ? 'Guardar cambios' : 'Publicar comunicado' }}</button>
+            @if (editandoComunicado()) { <button class="btn btn-outline-secondary" type="button" (click)="cancelarComunicado()">Cancelar</button> }
+          </div>
+        </form>
+      </section>
+
+      <section class="card rounded-4 p-3 p-md-4">
+        <h2 class="fs-5 fw-bold mb-3">{{ editandoFoto() ? 'Editar foto' : 'Nueva foto' }}</h2>
+        <form [formGroup]="fotoForm" (ngSubmit)="guardarFoto()" novalidate>
+          <label class="form-label fw-semibold" for="urlFoto">URL de la imagen</label>
+          <input id="urlFoto" type="url" class="form-control mb-3" formControlName="url" placeholder="https://..." />
+          @if (fotoForm.controls.url.touched && fotoForm.controls.url.invalid) { <div class="text-danger small mb-2">Pega una URL válida que comience por http o https.</div> }
+
+          <label class="form-label fw-semibold" for="altFoto">Descripción accesible</label>
+          <input id="altFoto" class="form-control mb-3" formControlName="alt" maxlength="120" placeholder="Estudiantes trabajando en equipo" />
+          <div class="form-check form-switch mb-4">
+            <input id="publicadaFoto" class="form-check-input" type="checkbox" formControlName="publicado" />
+            <label class="form-check-label" for="publicadaFoto">Publicar ahora</label>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary fw-bold flex-grow-1" type="submit" [disabled]="guardando()">{{ editandoFoto() ? 'Guardar cambios' : 'Publicar foto' }}</button>
+            @if (editandoFoto()) { <button class="btn btn-outline-secondary" type="button" (click)="cancelarFoto()">Cancelar</button> }
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="col-12 col-xl-7">
+      <section class="card rounded-4 p-3 p-md-4 mb-4">
+        <h2 class="fs-5 fw-bold mb-3">Comunicados ({{ comunicados().length }})</h2>
+        @if (cargando()) { <p class="text-secondary mb-0">Cargando...</p> }
+        @else if (comunicados().length === 0) { <p class="text-secondary mb-0">Aún no hay comunicados registrados.</p> }
+        @else {
+          <ul class="list-group list-group-flush">
+            @for (comunicado of comunicados(); track comunicado.id) {
+              <li class="list-group-item px-0 d-flex flex-wrap align-items-center gap-2">
+                <span class="badge rounded-circle bg-{{ comunicado.colorDot }}">&nbsp;</span>
+                <span class="flex-grow-1"><strong>{{ comunicado.titulo }}</strong><br /><small class="text-secondary">{{ comunicado.fecha }}</small></span>
+                <span class="badge" [class.text-bg-success]="comunicado.publicado" [class.text-bg-secondary]="!comunicado.publicado">{{ comunicado.publicado ? 'Publicado' : 'Borrador' }}</span>
+                <div class="btn-group btn-group-sm">
+                  <button class="btn btn-outline-secondary" type="button" (click)="editarComunicado(comunicado)" title="Editar" aria-label="Editar"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-outline-secondary" type="button" (click)="cambiarPublicacionComunicado(comunicado)" [title]="comunicado.publicado ? 'Despublicar' : 'Publicar'"><i class="bi" [class.bi-eye-slash]="comunicado.publicado" [class.bi-eye]="!comunicado.publicado"></i></button>
+                  <button class="btn btn-outline-danger" type="button" (click)="eliminarComunicado(comunicado)" title="Eliminar" aria-label="Eliminar"><i class="bi bi-trash"></i></button>
+                </div>
+              </li>
+            }
+          </ul>
+        }
+      </section>
+
+      <section class="card rounded-4 p-3 p-md-4">
+        <h2 class="fs-5 fw-bold mb-3">Galería ({{ fotos().length }})</h2>
+        @if (fotos().length === 0) { <p class="text-secondary mb-0">Aún no hay fotos registradas.</p> }
+        @else {
+          <div class="row row-cols-1 row-cols-md-2 g-3">
+            @for (foto of fotos(); track foto.id) {
+              <article class="col">
+                <img [src]="foto.url" [alt]="foto.alt" class="w-100 rounded-3" style="height: 140px; object-fit: cover;" />
+                <div class="d-flex align-items-center gap-2 mt-2">
+                  <span class="small text-truncate flex-grow-1">{{ foto.alt }}</span>
+                  <span class="badge" [class.text-bg-success]="foto.publicado" [class.text-bg-secondary]="!foto.publicado">{{ foto.publicado ? 'Publicado' : 'Borrador' }}</span>
+                  <button class="btn btn-sm btn-outline-secondary" type="button" (click)="editarFoto(foto)" title="Editar" aria-label="Editar"><i class="bi bi-pencil"></i></button>
+                  <button class="btn btn-sm btn-outline-secondary" type="button" (click)="cambiarPublicacionFoto(foto)" [title]="foto.publicado ? 'Despublicar' : 'Publicar'"><i class="bi" [class.bi-eye-slash]="foto.publicado" [class.bi-eye]="!foto.publicado"></i></button>
+                  <button class="btn btn-sm btn-outline-danger" type="button" (click)="eliminarFoto(foto)" title="Eliminar" aria-label="Eliminar"><i class="bi bi-trash"></i></button>
+                </div>
+              </article>
+            }
+          </div>
+        }
+      </section>
+    </div>
+  </div>
+</div>

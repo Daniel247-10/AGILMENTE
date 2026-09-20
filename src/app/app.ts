@@ -28,12 +28,13 @@ export class App {
 
   constructor() {
     onAuthStateChanged(auth, (user) => {
-      this.isAuthenticated.set(!!user);
+      const esInvitado = localStorage.getItem('agilmente_guest') === 'true';
+      this.isAuthenticated.set(!!user || esInvitado);
 
       if (user) {
         const nombreGuardado = localStorage.getItem('agilmente_user_name') ?? user.displayName ?? 'Usuario';
         this.usuario.nombre = this.formatearNombre(nombreGuardado);
-      } else {
+      } else if (!esInvitado) {
         this.usuario = {
           nombre: 'Usuario',
           rol: 'estudiante',

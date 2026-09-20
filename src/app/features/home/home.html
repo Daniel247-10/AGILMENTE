@@ -1,0 +1,59 @@
+<main class="home-page">
+  <nav class="home-nav" aria-label="Navegación principal">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark">A</span>
+      <span>Agilmente</span>
+    </a>
+
+    <div class="nav-actions">
+      <a class="btn btn-link" routerLink="/login">Iniciar sesión</a>
+      <a class="btn btn-primary nav-register" routerLink="/registrarse">Registrarse</a>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-copy">
+      <p class="eyebrow">Aprender también puede sentirse bien</p>
+      <h1>Crece a tu ritmo, aprende con propósito.</h1>
+      <p class="hero-text">
+        Agilmente reúne tus actividades, recursos y avances en un solo lugar para que cada día de aprendizaje tenga sentido.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" routerLink="/registrarse">Comenzar ahora <i class="bi bi-arrow-right"></i></a>
+        <a class="text-link" routerLink="/login">Ya tengo una cuenta</a>
+      </div>
+      <button type="button" class="guest-link" (click)="continuarComoInvitado()">
+        Continuar sin registrarme <i class="bi bi-arrow-up-right"></i>
+      </button>
+      <p class="guest-note">Puedes explorar sin cuenta. Tu progreso se guardará solo en este dispositivo.</p>
+      <div class="hero-note"><i class="bi bi-check-circle-fill"></i> Un espacio pensado para estudiantes y docentes</div>
+    </div>
+
+    <div class="hero-visual" aria-label="Vista previa del espacio de aprendizaje">
+      <div class="visual-glow"></div>
+      <div class="learning-card main-card">
+        <div class="card-topline"><span class="status-dot"></span> Tu aprendizaje de hoy</div>
+        <div class="progress-heading"><strong>Explora, practica y avanza</strong><span>72%</span></div>
+        <div class="progress-track"><span></span></div>
+        <div class="mini-grid">
+          <div><i class="bi bi-book"></i><strong>Biblioteca</strong><small>Recursos útiles</small></div>
+          <div><i class="bi bi-bar-chart-line"></i><strong>Progreso</strong><small>Ve tus logros</small></div>
+        </div>
+      </div>
+      <div class="floating-card streak-card"><i class="bi bi-stars"></i><div><strong>Tu esfuerzo cuenta</strong><small>5 días de avance</small></div></div>
+      <div class="floating-card goal-card"><span>Meta semanal</span><strong>4 de 5</strong><i class="bi bi-check2"></i></div>
+    </div>
+  </section>
+
+  <section class="benefits-section" aria-labelledby="benefits-title">
+    <div class="section-heading">
+      <p class="eyebrow">Todo en un mismo lugar</p>
+      <h2 id="benefits-title">Una experiencia que acompaña tu proceso</h2>
+    </div>
+    <div class="benefit-list">
+      <article><i class="bi bi-compass"></i><h3>Aprende con dirección</h3><p>Encuentra materiales y actividades organizados para avanzar con claridad.</p></article>
+      <article><i class="bi bi-lightbulb"></i><h3>Descubre tus fortalezas</h3><p>Observa tus logros y convierte cada reto en una nueva oportunidad.</p></article>
+      <article><i class="bi bi-people"></i><h3>Forma parte de la comunidad</h3><p>Conecta tu experiencia académica con estudiantes y docentes.</p></article>
+    </div>
+  </section>
+</main>

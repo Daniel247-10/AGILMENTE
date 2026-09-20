@@ -1,0 +1,440 @@
+:host {
+  display: block;
+}
+
+.home-page {
+  min-height: 100vh;
+  overflow: hidden;
+  background: #f8faf7;
+  color: #19332f;
+}
+
+.home-nav,
+.hero-section,
+.benefits-section {
+  width: min(1180px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.home-nav {
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #19332f;
+  font-size: 1.2rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 13px;
+  background: #ef8354;
+  color: #fff;
+  font-size: 1.3rem;
+  box-shadow: 0 10px 20px rgba(239, 131, 84, 0.25);
+}
+
+.nav-actions,
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-actions .btn-link {
+  color: #31544d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-primary {
+  border: 0;
+  border-radius: 10px;
+  background: #ef8354;
+  box-shadow: 0 10px 20px rgba(239, 131, 84, 0.22);
+  font-weight: 700;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: #d96e42;
+}
+
+.nav-register {
+  padding-inline: 1.15rem;
+}
+
+.hero-section {
+  min-height: 570px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+  align-items: center;
+  gap: 70px;
+  padding-block: 48px 72px;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  margin-bottom: 16px;
+  color: #ef8354;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-weight: 700;
+}
+
+h1 {
+  max-width: 620px;
+  margin-bottom: 22px;
+  color: #19332f;
+  font-size: clamp(3rem, 5vw, 5.2rem);
+  line-height: 0.98;
+}
+
+.hero-text {
+  max-width: 530px;
+  margin-bottom: 30px;
+  color: #58716c;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+
+.hero-actions .btn {
+  padding: 0.9rem 1.25rem;
+}
+
+.text-link {
+  color: #31544d;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  color: #ef8354;
+}
+
+.guest-link {
+  display: block;
+  margin-top: 22px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #31544d;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.guest-link:hover {
+  color: #ef8354;
+}
+
+.guest-note {
+  max-width: 420px;
+  margin: 8px 0 0;
+  color: #78918b;
+  font-size: 0.82rem;
+}
+
+.hero-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 25px;
+  color: #75908a;
+  font-size: 0.9rem;
+}
+
+.hero-note i {
+  color: #5c9b82;
+}
+
+.hero-visual {
+  position: relative;
+  min-height: 440px;
+  display: grid;
+  place-items: center;
+}
+
+.visual-glow {
+  position: absolute;
+  width: 390px;
+  height: 390px;
+  border-radius: 50%;
+  background: #dcefe4;
+}
+
+.learning-card,
+.floating-card {
+  position: relative;
+  z-index: 1;
+  border: 1px solid rgba(49, 84, 77, 0.1);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 24px 45px rgba(49, 84, 77, 0.14);
+}
+
+.main-card {
+  width: min(100%, 430px);
+  padding: 30px;
+  border-radius: 22px;
+  transform: rotate(2deg);
+}
+
+.card-topline {
+  margin-bottom: 42px;
+  color: #75908a;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: #5c9b82;
+}
+
+.progress-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+  color: #19332f;
+}
+
+.progress-heading span {
+  color: #ef8354;
+  font-weight: 800;
+}
+
+.progress-track {
+  height: 11px;
+  margin-bottom: 44px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: #e5eee9;
+}
+
+.progress-track span {
+  display: block;
+  width: 72%;
+  height: 100%;
+  border-radius: inherit;
+  background: #5c9b82;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.mini-grid div {
+  display: grid;
+  gap: 5px;
+  padding: 16px;
+  border-radius: 13px;
+  background: #f2f7f3;
+}
+
+.mini-grid i {
+  color: #ef8354;
+  font-size: 1.4rem;
+}
+
+.mini-grid strong,
+.floating-card strong {
+  color: #31544d;
+}
+
+.mini-grid small,
+.floating-card small {
+  color: #78918b;
+}
+
+.floating-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 18px;
+  border-radius: 14px;
+}
+
+.streak-card {
+  top: 48px;
+  left: 2%;
+}
+
+.streak-card i {
+  color: #ef8354;
+  font-size: 1.4rem;
+}
+
+.goal-card {
+  right: 0;
+  bottom: 35px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 18px;
+}
+
+.goal-card span {
+  color: #78918b;
+  font-size: 0.8rem;
+}
+
+.goal-card i {
+  grid-row: span 2;
+  align-self: center;
+  color: #5c9b82;
+}
+
+.benefits-section {
+  padding-block: 55px 85px;
+  border-top: 1px solid rgba(49, 84, 77, 0.1);
+}
+
+.section-heading {
+  max-width: 500px;
+  margin-bottom: 32px;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin: 0;
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+.benefit-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.benefit-list article {
+  padding-top: 24px;
+  border-top: 2px solid #dcefe4;
+}
+
+.benefit-list i {
+  color: #ef8354;
+  font-size: 1.6rem;
+}
+
+.benefit-list h3 {
+  margin: 16px 0 10px;
+  font-size: 1.35rem;
+}
+
+.benefit-list p {
+  margin: 0;
+  color: #6d8680;
+  line-height: 1.6;
+}
+
+@media (max-width: 800px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-top: 35px;
+  }
+
+  .hero-visual {
+    min-height: 380px;
+  }
+
+  .benefit-list {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 560px) {
+  .home-nav,
+  .hero-section,
+  .benefits-section {
+    width: min(100% - 32px, 1180px);
+  }
+
+  .home-nav {
+    min-height: 75px;
+  }
+
+  .nav-actions {
+    gap: 2px;
+  }
+
+  .nav-actions .btn-link {
+    padding-inline: 6px;
+    font-size: 0.86rem;
+  }
+
+  .nav-register {
+    padding-inline: 10px;
+  }
+
+  h1 {
+    font-size: clamp(2.8rem, 15vw, 4rem);
+  }
+
+  .hero-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hero-visual {
+    min-height: 340px;
+  }
+
+  .main-card {
+    padding: 22px;
+  }
+
+  .streak-card {
+    top: 8px;
+    left: 0;
+    transform: scale(0.86);
+    transform-origin: left top;
+  }
+
+  .goal-card {
+    right: 0;
+    bottom: 6px;
+    transform: scale(0.86);
+    transform-origin: right bottom;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+}

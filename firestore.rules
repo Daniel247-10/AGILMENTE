@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function autenticado() {
+      return request.auth != null;
+    }
+
+    function esAdministrador() {
+      return autenticado()
+        && get(/databases/$(database)/documents/usuarios/$(request.auth.uid)).data.rol == 'administrador';
+    }
+
+    match /usuarios/{uid} {
+      allow read: if autenticado() && (request.auth.uid == uid || esAdministrador());
+      allow create: if autenticado()
+        && request.auth.uid == uid
+        && request.resource.data.rol in ['estudiante', 'docente'];
+      allow update: if esAdministrador()
+        || (autenticado()
+          && request.auth.uid == uid
+          && request.resource.data.rol == resource.data.rol);
+      allow delete: if esAdministrador();
+    }
+
+    match /biblioteca/{id} {
+      allow read: if esAdministrador() || (autenticado() && resource.data.publicado == true);
+      allow create, update, delete: if esAdministrador();
+    }
+
+    match /comunicados/{id} {
+      allow read: if esAdministrador() || (autenticado() && (resource.data.publicado == true || resource.data.destacado == true));
+      allow create, update, delete: if esAdministrador();
+    }
+
+    match /fotosGaleria/{id} {
+      allow read: if esAdministrador() || (autenticado() && resource.data.publicado == true);
+      allow create, update, delete: if esAdministrador();
+    }
+
+    match /galeria/{id} {
+      allow read: if esAdministrador() || (autenticado() && resource.data.publicado == true);
+      allow create, update, delete: if esAdministrador();
+    }
+
+    match /unidadEducativa/{id} {
+      allow read: if autenticado();
+      allow create, update, delete: if esAdministrador();
+    }
+  }
+}

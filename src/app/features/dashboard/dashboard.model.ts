@@ -10,14 +10,14 @@ export interface ActividadResumen {
 }
 
 export interface Comunicado {
-  id: number;
+  id: string | number;
   titulo: string;
   fecha: string;
   colorDot: 'red' | 'blue' | 'green';
 }
 
 export interface FotoGaleria {
-  id: number;
+  id: string | number;
   url: string;
   alt: string;
 }

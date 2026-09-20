@@ -1,17 +1,15 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-
-import { obtenerRolActual } from '../../core/rol';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CATEGORIAS_MATERIAL, ETIQUETA_TIPO, ICONO_TIPO, MaterialBiblioteca } from './biblioteca.model';
 import { BibliotecaService } from './biblioteca.service';
 
 @Component({
   selector: 'app-biblioteca',
-  imports: [RouterLink],
   templateUrl: './biblioteca.html'
 })
 export class Biblioteca implements OnInit {
   private readonly servicio = inject(BibliotecaService);
+  private readonly sanitizer = inject(DomSanitizer);
 
   readonly categorias = CATEGORIAS_MATERIAL;
   readonly icono = ICONO_TIPO;
@@ -20,9 +18,20 @@ export class Biblioteca implements OnInit {
   readonly materiales = signal<MaterialBiblioteca[]>([]);
   readonly cargando = signal(true);
   readonly error = signal('');
-  readonly esAdmin = signal(false);
   readonly busqueda = signal('');
   readonly categoria = signal('Todas');
+
+  portada(material: MaterialBiblioteca): SafeResourceUrl {
+    const rutas: Record<MaterialBiblioteca['tipo'], string> = {
+      archivo: `https://drive.google.com/file/d/${material.driveId}/preview`,
+      documento: `https://docs.google.com/document/d/${material.driveId}/preview`,
+      hoja: `https://docs.google.com/spreadsheets/d/${material.driveId}/preview`,
+      presentacion: `https://docs.google.com/presentation/d/${material.driveId}/preview`,
+      carpeta: `https://drive.google.com/drive/folders/${material.driveId}`
+    };
+
+    return this.sanitizer.bypassSecurityTrustResourceUrl(rutas[material.tipo]);
+  }
 
   // Material que coincide con el texto buscado y la categoría elegida
   readonly filtrados = computed(() => {
@@ -37,9 +46,6 @@ export class Biblioteca implements OnInit {
   });
 
   async ngOnInit(): Promise<void> {
-    // El botón "Administrar" solo aparece si el rol guardado en Firestore es administrador
-    obtenerRolActual().then((rol) => this.esAdmin.set(rol === 'administrador'));
-
     try {
       this.materiales.set(await this.servicio.listarPublicados());
     } catch {

@@ -1,6 +1,12 @@
-// Categorías = las 6 temáticas de la tesis, más una general
+// Categorías disponibles para clasificar el material de la biblioteca
 export const CATEGORIAS_MATERIAL = [
   'General',
+  'Grado 1',
+  'Grado 2',
+  'Grado 3',
+  'Grado 4',
+  'Grado 5',
+  'Grado 6',
   'Sucesiones y patrones',
   'Conteo de figuras',
   'Relaciones y analogías',

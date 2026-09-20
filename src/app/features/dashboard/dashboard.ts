@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ContenidoService } from '../contenido/contenido.service';
 import { UsuarioResumen, ActividadResumen, Comunicado, FotoGaleria } from './dashboard.model';
 import { WelcomeBannerComponent } from './components/welcome-banner/welcome-banner';
-import { Sidebar } from './components/sidebar/sidebar';
-import { Topbar } from './components/topbar/topbar';
 import { ActivityCard } from './components/activity-card/activity-card';
 import { AnnouncementsPanel } from './components/announcements-panel/announcements-panel';
 import { GalleryPanel } from './components/gallery-panel/gallery-panel';
@@ -12,8 +11,6 @@ import { GalleryPanel } from './components/gallery-panel/gallery-panel';
 @Component({
   selector: 'app-dashboard',
   imports: [
-    Sidebar,
-    Topbar,
     WelcomeBannerComponent,
     ActivityCard,
     AnnouncementsPanel,
@@ -22,7 +19,9 @@ import { GalleryPanel } from './components/gallery-panel/gallery-panel';
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css'
 })
-export class Dashboard {
+export class Dashboard implements OnInit {
+  private readonly contenido = inject(ContenidoService);
+
   constructor(private readonly router: Router) {
     const nombreGuardado = localStorage.getItem('agilmente_user_name');
     if (nombreGuardado) {
@@ -136,6 +135,21 @@ export class Dashboard {
     { id: 3, url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80', alt: 'Trabajo en equipo' },
     { id: 4, url: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80', alt: 'Aprendizaje creativo' }
   ];
+
+  async ngOnInit(): Promise<void> {
+    const [resultadoComunicados, resultadoFotos] = await Promise.allSettled([
+      this.contenido.listarComunicadosPublicados(),
+      this.contenido.listarFotosPublicadas()
+    ]);
+
+    if (resultadoComunicados.status === 'fulfilled' && resultadoComunicados.value.length > 0) {
+      this.comunicados = resultadoComunicados.value;
+    }
+
+    if (resultadoFotos.status === 'fulfilled' && resultadoFotos.value.length > 0) {
+      this.fotos = resultadoFotos.value;
+    }
+  }
 
   irAProgreso(): void {
     this.router.navigateByUrl('/progreso');
